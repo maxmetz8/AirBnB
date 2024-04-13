@@ -12,47 +12,47 @@ namespace AirB_B.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class LandlordsController : ControllerBase
     {
         private readonly AirB_BContext _context;
 
-        public UsersController(AirB_BContext context)
+        public LandlordsController(AirB_BContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Landlords
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Landlord>>> GetLandlords()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Landlords.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Landlords/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Landlord>> GetLandlords(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var landlords = await _context.Landlords.FindAsync(id);
 
-            if (user == null)
+            if (landlords == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return landlords;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Landlords/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutLandlords(int id, Landlord landlords)
         {
-            if (id != user.Id)
+            if (id != landlords.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(landlords).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace AirB_B.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!LandlordsExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace AirB_B.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Landlords
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Landlord>> PostLandlords(Landlord landlords)
         {
-            _context.User.Add(user);
+            _context.Landlords.Add(landlords);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetLandlords", new { id = landlords.Id }, landlords);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Landlords/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteLandlords(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var landlords = await _context.Landlords.FindAsync(id);
+            if (landlords == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Landlords.Remove(landlords);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool LandlordsExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Landlords.Any(e => e.Id == id);
         }
     }
 }
