@@ -5,13 +5,13 @@
 namespace AirB_B.Migrations
 {
     /// <inheritdoc />
-    public partial class init_user : Migration
+    public partial class init_Landlords : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Landlords",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,7 +22,7 @@ namespace AirB_B.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Landlords", x => x.Id);
                 });
         }
 
@@ -30,7 +30,7 @@ namespace AirB_B.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Landlords");
         }
     }
 }

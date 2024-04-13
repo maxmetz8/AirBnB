@@ -14,6 +14,8 @@ namespace AirB_B.Data
         {
         }
 
-        public DbSet<AirB_B.Models.User> User { get; set; } = default!;
+        
+        public DbSet<AirB_B.Models.Landlord> Landlords { get; set; } = default!;
+        public DbSet<AirB_B.Models.Location> Location { get; set; } = default!;
     }
 }
