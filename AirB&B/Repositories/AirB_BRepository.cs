@@ -16,5 +16,9 @@ namespace AirB_B.Repositories
         {
             return await _context.Location.ToListAsync(cancellationToken);
         }
+        public async Task<IEnumerable<Location>> GetAllLocationsDTOAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Location.Include(location => location.Images).Include(location => location.Landlord).ThenInclude(location => location.Avatar).ToListAsync(cancellationToken);
+        }
     }
 }
