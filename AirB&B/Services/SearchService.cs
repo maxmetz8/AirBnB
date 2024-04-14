@@ -26,5 +26,10 @@ namespace AirB_B.Services
             return (await _airB_BRepository.GetAllLocationsDTOAsync(cancellationToken)).Select(location => _mapper.Map<LocationDto>(location));
 
         }
+        public async Task<IEnumerable<PricedLocationDTO>> GetPricedLocation(CancellationToken cancellationToken)
+        {
+            return (await _airB_BRepository.GetAllLocationsDTOAsync(cancellationToken)).Select(location => _mapper.Map<PricedLocationDTO>(location));
+
+        }
     }
 }
