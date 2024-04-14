@@ -6,6 +6,7 @@ namespace AirB_B.Repositories
     {
         public Task<IEnumerable<Location>> GetAllLocation(CancellationToken cancellationToken);
         public Task<IEnumerable<Location>> GetAllLocationsDTOAsync(CancellationToken cancellationToken);
+        public Task<Location> GetLocationAsync(int id, CancellationToken cancellationToken);
 
     }
 }

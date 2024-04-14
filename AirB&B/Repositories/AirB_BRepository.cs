@@ -20,5 +20,13 @@ namespace AirB_B.Repositories
         {
             return await _context.Location.Include(location => location.Images).Include(location => location.Landlord).ThenInclude(location => location.Avatar).ToListAsync(cancellationToken);
         }
+        public async Task<Location> GetLocationAsync(int id, CancellationToken cancellationToken)
+        {
+            return await _context.Location
+                .Include(l => l.Images)
+                .Include(l => l.Landlord)
+                .ThenInclude(l => l.Avatar)
+                .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
+        }
     }
 }

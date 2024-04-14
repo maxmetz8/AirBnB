@@ -7,5 +7,6 @@ namespace AirB_B.Services
     {
         public Task<IEnumerable<Location>> GetAllLocation(CancellationToken cancellationToken);
         public Task<IEnumerable<LocationDto>> GetLocation(CancellationToken cancellationToken);
+        public Task<IEnumerable<PricedLocationDTO>> GetPricedLocation(CancellationToken cancellationToken);
     }
 }
