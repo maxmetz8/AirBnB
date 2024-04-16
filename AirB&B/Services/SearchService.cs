@@ -2,6 +2,7 @@
 using AirB_B.Models.DTO;
 using AirB_B.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirB_B.Services
@@ -30,6 +31,63 @@ namespace AirB_B.Services
         {
             return (await _airB_BRepository.GetAllLocationsDTOAsync(cancellationToken)).Select(location => _mapper.Map<PricedLocationDTO>(location));
 
+        }
+        public async Task<IEnumerable<PricedLocationDTO>> Search(SearchDTO? obj, CancellationToken cancellationToken)
+        {
+            int? MinPrice = obj.MinPrice;
+            int? MaxPrice = obj.MaxPrice;
+            int? Room = obj.Rooms;
+
+            if (obj.MinPrice == null)
+            {
+                MinPrice = 0;
+            }
+            if (obj.MaxPrice == null)
+            {
+                MaxPrice = int.MaxValue;
+            }
+            if (obj.Rooms == null)
+            {
+                Room = 0;
+            }
+            var list = await _airB_BRepository.GetAllLocationsDTOAsync(cancellationToken);
+            if (obj.Features == null && obj.Type == null && obj.MaxPrice == null && obj.MinPrice == null && obj.Rooms == null)
+            {
+                return list.Select(location => _mapper.Map<PricedLocationDTO>(location));
+            }
+            if (obj.Features == null && obj.Type == null)
+            {
+                var filtered = list.Where(item => item.PricePerDay >= MinPrice).Where(item => item.PricePerDay <= MaxPrice).Where(item => item.Rooms >= Room);
+                return filtered.Select(location => _mapper.Map<PricedLocationDTO>(location));
+            }
+            if (obj.Features == null)
+            {
+                var filtered = list.Where(item => item.Type == obj.Type).Where(item => item.PricePerDay >= MinPrice).Where(item => item.PricePerDay <= MaxPrice).Where(item => item.Rooms >= Room);
+                return filtered.Select(location => _mapper.Map<PricedLocationDTO>(location));
+            }
+            if (obj.Type == null)
+            {
+                var filtered = list.Where(item => item.Features == obj.Features).Where(item => item.PricePerDay >= MinPrice).Where(item => item.PricePerDay <= MaxPrice).Where(item => item.Rooms >= Room);
+                return filtered.Select(location => _mapper.Map<PricedLocationDTO>(location));
+            }
+            else
+            {
+                var filtered = list.Where(item => item.Features == obj.Features).Where(item => item.PricePerDay >= MinPrice).Where(item => item.PricePerDay <= MaxPrice).Where(item => item.Type == obj.Type).Where(item => item.Rooms >= Room);
+                return filtered.Select(location => _mapper.Map<PricedLocationDTO>(location));
+            }
+        }
+        public async Task<ActionResult<MaxPriceDTO>> GetMaxPrice(CancellationToken cancellationToken)
+        {
+            IEnumerable<MaxPriceDTO> list = (await _airB_BRepository.GetAllLocationsDTOAsync(cancellationToken)).Select(location => _mapper.Map<MaxPriceDTO>(location));
+            return list.OrderByDescending(item => item.Price).First();
+
+        }
+
+        public async Task<ActionResult<DetailsDTO>> GetDetailsLocation(CancellationToken cancellationToken, int id)
+        {
+            var locationsById = await _airB_BRepository.GetLocationAsync(id, cancellationToken);
+            var detailedLocation = _mapper.Map<DetailsDTO>(locationsById);
+            return detailedLocation;
         }
     }
 }
