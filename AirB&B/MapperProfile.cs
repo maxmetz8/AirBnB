@@ -34,6 +34,12 @@ namespace AirB_B
             CreateMap<Image, ImageDTO>()
                 .ForMember(d => d.URL, opt => opt.MapFrom(s => s.Url))
                 .ForMember(d => d.IsCover, opt => opt.MapFrom(s => s.IsCover));
+            CreateMap<PostReservationDTO, Reservation>();
+            CreateMap<Reservation, PlacedReservationDTO>()
+                .ForMember(d => d.CustomerName, opt => opt.MapFrom(s => $"{s.Customer.FirstName} {s.Customer.LastName}"))
+                .ForMember(d => d.LocationName, opt => opt.MapFrom(s => s.Location.Title))
+                .ForMember(d => d.Price, opt => opt.MapFrom(s => s.Location.PricePerDay * (s.EndDate - s.StartDate).TotalDays))
+                .ForMember(d => d.Discount, opt => opt.MapFrom(s => s.Discount));
         }
     }
 }

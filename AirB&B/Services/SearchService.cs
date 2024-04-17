@@ -89,5 +89,14 @@ namespace AirB_B.Services
             var detailedLocation = _mapper.Map<DetailsDTO>(locationsById);
             return detailedLocation;
         }
+
+        public async Task<UnavailableDatesDTO> GetUnavailableDates(int locatoinId, CancellationToken cancellationToken)
+        {
+            var reservations = await _airB_BRepository.GetReservationsByLocationid(locatoinId, cancellationToken);
+
+            var unavailableDates = reservations.SelectMany(res => Enumerable.Range(0, (res.EndDate - res.StartDate).Days + 1)
+            .Select(i => res.StartDate.AddDays(i))).ToList();
+            return new UnavailableDatesDTO { UnavailableDates = unavailableDates };
+        }
     }
 }

@@ -20,6 +20,7 @@ builder.Services.AddDbContext<AirB_BContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddScoped<ISearchService, SearchService>();
 builder.Services.AddScoped<IAirB_BRepository, AirB_BRepository>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

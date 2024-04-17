@@ -17,6 +17,8 @@ namespace AirB_B.Data
 
         public DbSet<AirB_B.Models.Landlord> Landlords { get; set; } = default!;
         public DbSet<AirB_B.Models.Location> Location { get; set; } = default!;
+        public DbSet<AirB_B.Models.Reservation> Reservation { get; set; }
+        public DbSet<AirB_B.Models.Customer> Customer { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,7 +29,8 @@ namespace AirB_B.Data
 
             modelBuilder.Entity<Customer>().HasData(
              new { Id = 1, FirstName = "Max", LastName = "Metz", Email = "maxmetz@gmail.com"},
-             new { Id = 2, FirstName = "Lisa", LastName = "Werner", Email = "lisawerner@gmail.com"}
+             new { Id = 2, FirstName = "Lisa", LastName = "Werner", Email = "lisawerner@gmail.com"},
+             new { Id = 3, FirstName = "Nora", LastName = "De Jong", Email = "NdeJong@gmail.com" }
                 );
 
 
@@ -86,10 +89,10 @@ namespace AirB_B.Data
 
 
             modelBuilder.Entity<Reservation>().HasData(
-               new { Id = 1, StartDate = new DateTime(2023, 7, 5), EndDate = new DateTime(2023, 8, 5), CustomerId = 1, LocationId = 3, Discount = 0F },
-               new { Id = 2, StartDate = new DateTime(2023, 2, 9), EndDate = new DateTime(2023, 3, 1), CustomerId = 2, LocationId = 6, Discount = 0F }
-
-           );
+    new { Id = 1, StartDate = new DateTime(2025, 7, 5), EndDate = new DateTime(2025, 8, 5), CustomerId = 1, LocationId = 3, Discount = 0F },
+    new { Id = 2, StartDate = new DateTime(2025, 5, 9), EndDate = new DateTime(2025, 6, 1), CustomerId = 2, LocationId = 6, Discount = 0F },
+    new { Id = 3, StartDate = new DateTime(2025, 11, 11), EndDate = new DateTime(2025, 1, 1), CustomerId = 3, LocationId = 4, Discount = 0F }
+);
 
 
 
