@@ -113,5 +113,18 @@ namespace AirB_B.Controllers
             var detailsLocation = await _searchService.GetDetailsLocation(cancellationToken, id);
             return detailsLocation;
         }
+
+        /// <summary>
+        /// Get unavailable dates by locationid based on reservations week 7
+        /// </summary>
+        /// <param name="locationId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("UnAvailableDates/{locationId}")]
+        public async Task<ActionResult<UnavailableDatesDTO>> GetUnavailableDatesById(int locationId, CancellationToken cancellationToken)
+        {
+            var unavailableDates = await _searchService.GetUnavailableDates(locationId, cancellationToken);
+            return unavailableDates;
+        }
     }   
 }

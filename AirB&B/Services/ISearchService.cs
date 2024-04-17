@@ -12,5 +12,6 @@ namespace AirB_B.Services
         public Task<IEnumerable<PricedLocationDTO>> Search(SearchDTO? obj, CancellationToken cancellationToken);
         public Task<ActionResult<MaxPriceDTO>> GetMaxPrice(CancellationToken cancellationToken);
         public Task<ActionResult<DetailsDTO>> GetDetailsLocation(CancellationToken cancellationToken, int id);
+        public Task<UnavailableDatesDTO> GetUnavailableDates(int locationId, CancellationToken cancellationToken);
     }
 }

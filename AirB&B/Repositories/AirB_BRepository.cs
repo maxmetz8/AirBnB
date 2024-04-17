@@ -28,5 +28,34 @@ namespace AirB_B.Repositories
                 .ThenInclude(l => l.Avatar)
                 .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
         }
+
+        public async Task<List<Reservation>> GetReservationsByLocationid(int locationId, CancellationToken cancellationToken)
+        {
+            return await _context.Reservation.Where(r => r.LocationId == locationId && r.EndDate >= DateTime.Today).ToListAsync(cancellationToken);
+        }
+
+        public async Task<Customer> GetCustomerByEmail(string email, CancellationToken cancellationToken)
+        {
+            return await _context.Customer.FirstOrDefaultAsync(obj => obj.Email == email, cancellationToken);
+        }
+        public async Task AddCustomer(Customer customer, CancellationToken cancellationToken)
+        {
+            await _context.Customer.AddAsync(customer, cancellationToken);
+
+        }
+        public async Task AddReservation(Reservation reservation, CancellationToken cancellationToken)
+        {
+            await _context.Reservation.AddAsync(reservation, cancellationToken);
+        }
+        public async Task<List<Reservation>> GetExistingReservations(int? locationId, DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
+        {
+            return await _context.Reservation.Where(r => r.LocationId == locationId
+            && r.StartDate <= endDate && r.EndDate >= startDate).ToListAsync(cancellationToken);
+        }
+
+        public async Task SaveChanges(CancellationToken cancellationToken)
+        {
+            await _context.SaveChangesAsync(cancellationToken);
+        }
     }
 }
