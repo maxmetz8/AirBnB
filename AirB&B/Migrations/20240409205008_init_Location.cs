@@ -11,8 +11,6 @@ namespace AirB_B.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "User");
 
             migrationBuilder.DropColumn(
                 name: "Email",
